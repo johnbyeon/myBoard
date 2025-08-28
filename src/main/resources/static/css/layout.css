@@ -1,0 +1,21 @@
+html{
+    margin : 0;
+}
+
+body{
+    margin : 0;
+    display : flex;
+    flex-direction : column;
+}
+
+.content {
+    flex : 1;
+    margin-bottom: 20px;
+    margin-top: 50px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+.footer{
+   margin-bottom: auto;
+   width: 100%;
+}
