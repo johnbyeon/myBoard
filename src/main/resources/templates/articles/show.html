@@ -1,56 +1,62 @@
-<table class="table m-2">
-  <thead>
-  <tr>
-    <th scope="col">Id</th>
-    <th scope="col">Title</th>
-    <th scope="col">Content</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <th scope="row" >1</th>
-    <td >제목111</td>
-    <td >내용 1111</td>
-  </tr>
-  </tbody>
-</table>
-<a href="" class="btn btn-primary">Edit</a>
-<a href="" class="btn btn-danger">Delete</a>
-<a href="/templates/articless/articles">Go to Article List</a>
-<br><br>
-<div class="card m-2">
-  <div class="card-header">
-    <span>Featured</span>
-    <a class="btn btn-sm btn-outline-primary">수정</a>
-    <a class="btn btn-sm btn-outline-primary" id="comment-delete-btn">삭제</a>
-  </div>
-  <div class="card-body">
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  </div>
-</div>
+<!DOCTYPE html>
+<html xmlns:th="www.thymeleaf.org"
+      xmlns:layout="www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
 
-<div class="card m-2">
-  <div class="card-header">
-    <span>Featured</span>
-    <a class="btn btn-sm btn-outline-primary">수정</a>
-    <a class="btn btn-sm btn-outline-primary" id="comment-delete-btn">삭제</a>
-  </div>
-  <div class="card-body">
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-  </div>
-</div>
+</head>
+<body>
+<div layout:fragment="content" class="content">
+  <table class="table m-2">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Title</th>
+      <th scope="col">Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${dto}">
+      <th scope="row" th:text = "*{id}">1</th>
+      <td th:text = "*{title}">제목111</td>
+      <td th:text = "*{content}">내용 1111</td>
+    </tr>
+    </tbody>
+  </table>
+  <a href="" class="btn btn-primary" th:href="@{|/articles/${dto.id}/update|}">Edit</a>
+  <a href="" class="btn btn-danger" th:href="@{|/articles/${dto.id}/delete|}" >Delete</a>
+  <a th:href="@{/articles}">Go to Article List</a>
+  <br><br>
 
-<form>
-  <!-- 닉네임 입력-->
-  <div class="m-2">
-    <label class="form-label">닉네임</label>
-    <input type="text" class="form-control" id="new-comment-nickname">
-  </div>
-  <!-- 댓글 본문 입력-->
-  <div class="m-2">
-    <label class="form-label">댓글 내용</label>
-    <textarea type="text" class="form-control" rows="3" id="new-comment-body"></textarea>
-  </div>
-  <!-- 전송버튼-->
-  <button type="button" class="btn btn-primary" id="comment-create-btn">댓글 작성</button>
-</form>
+  <th:block th:each="comment :${dto.commentList}" th:object="${comment}">
+    <div class="card m-2">
+      <div class="card-header">
+        <span th:text="*{nickName}">Featured</span>
+        <a class="btn btn-sm btn-outline-primary">수정</a>
+        <a class="btn btn-sm btn-outline-primary"id="comment-delete-btn">삭제</a>
+      </div>
+      <div class="card-body">
+        <p class="card-text" th:text="*{body}">With supporting text below as a natural lead-in to additional content.</p>
+      </div>
+    </div>
+  </th:block>
+
+  <form>
+    <!-- 닉네임 입력-->
+    <div class="m-2">
+      <label class="form-label">닉네임</label>
+      <input type="text" class="form-control" id="new-comment-nickname">
+    </div>
+    <!-- 댓글 본문 입력-->
+    <div class="m-2">
+      <label class="form-label">댓글 내용</label>
+      <textarea type="text" class="form-control" rows="3" id="new-comment-body"></textarea>
+    </div>
+    <!-- 전송버튼-->
+    <button type="button" class="btn btn-primary" id="comment-create-btn">댓글 작성</button>
+  </form>
+</div>
+</body>
+</html>
