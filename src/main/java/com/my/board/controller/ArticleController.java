@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,7 +58,8 @@ public class ArticleController {
     }
 
     @GetMapping("/new")
-    private String createNewArticle(){
+    private String createNewArticle(Model model){
+        model.addAttribute("dto",new ArticleDto());
         return "/articles/new";
     }
 
@@ -69,4 +71,11 @@ public class ArticleController {
         return "redirect:/articles";
     }
 
+    @PostMapping("create")
+    public String createArticle(ArticleDto dto,
+                                RedirectAttributes redirectAttributes) {
+        articleService.insertArticle(dto);
+        redirectAttributes.addFlashAttribute("msg","새로운 게시글이 등록 되었습니다.");
+        return "redirect:/articles";
+    }
 }

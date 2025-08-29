@@ -56,4 +56,10 @@ public class ArticleService {
     public void deleteArticle(Long id){
         dao.deleteArticle(id);
     }
+
+    public void insertArticle(ArticleDto dto) {
+
+        dao.insertArticle(ArticleDto.toArticle(dto));
+
+    }
 }
