@@ -62,4 +62,7 @@ public class ArticleService {
         dao.insertArticle(ArticleDto.toArticle(dto));
 
     }
+    public void updateArticle(ArticleDto dto) {
+        dao.updateArticle(dto);
+    }
 }
