@@ -27,4 +27,8 @@ public class CommentService {
         }
         return map;
     }
+
+    public void updateComment(CommentDto dto) {
+        dao.updateComment(CommentDto.fromDto(dto));
+    }
 }

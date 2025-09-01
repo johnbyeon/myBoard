@@ -26,9 +26,9 @@ public class ArticleController {
     @GetMapping({"", "/"})
     public String showArticles(Model model,
                                @PageableDefault(
-                                       page = 0,
+                                       page = 1,
                                        size = 5,
-                                       direction = Sort.Direction.DESC
+                                       direction = Sort.Direction.ASC
                                )Pageable pageable,
                                RedirectAttributes redirectAttributes) {
 //        redirectAttributes.addFlashAttribute("msg",null);

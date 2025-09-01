@@ -17,4 +17,9 @@ public class CommentDao {
         return em.find(Comment.class,commentId);
     }
 
+    public void updateComment(Comment comment) {
+        Comment updateComment = em.find(Comment.class,comment.getId());
+        updateComment.setBody(comment.getBody());
+
+    }
 }
