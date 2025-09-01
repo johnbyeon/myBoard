@@ -28,7 +28,14 @@ public class CommentService {
         return map;
     }
 
+
     public void updateComment(CommentDto dto) {
         dao.updateComment(CommentDto.fromDto(dto));
+    }
+  
+    public void insertComment(Long articleId, CommentDto dto) {
+
+        dao.insertComment(articleId,CommentDto.fromDto(dto));
+
     }
 }

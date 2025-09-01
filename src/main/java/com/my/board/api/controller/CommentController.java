@@ -38,6 +38,7 @@ public class CommentController {
                 .status(HttpStatus.OK)
                 .body(dto);
     }
+
     @PatchMapping("/comments/{commentId}")
     public ResponseEntity<?> commentUpdate(
             @PathVariable("commentId")Long commentId,
@@ -61,6 +62,24 @@ public class CommentController {
                 .body(ApiResponse.builder()
                         .message("댓글 수정 성공")
                         .build());
+    }
+
+
+    //2.댓글 생성 api
+
+    @PostMapping("articles/{articleId}/comments")
+    public ResponseEntity<?> commentCreate(
+            @PathVariable("articleId")Long articleId,
+            @RequestBody CommentDto dto
+        ){
+        commentService.insertComment(articleId,dto);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse
+                        .builder()
+                        .message("댓글생성성공")
+                        .build());
+
     }
 
 }
