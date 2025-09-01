@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    userId:<input type="text" id="userId"><br>
+    password:<input type="text" id="password"><br>
+    <button id="btn_apiTest">Api Test</button><br>
+    <button id="btn_stringTest">String Test</button><br>
+    <button id="btn_arrayTest">array Test</button><br>
+    <button id="btn_deleteTest">delete Test</button><br>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        //API POST 시
+         document.getElementById('btn_apiTest').addEventListener('click',function(){
+             fetch('apiEntityTest',{
+                 method:'POST',
+                 headers:{
+                     'Content-Type': 'application/json',
+                 },
+                 body:JSON.stringify({
+                     'userId': document.getElementById('userId').value,
+                     'password' : document.getElementById('password').value
+                 })
+
+             })
+             .then(response => response.text())
+             .then(
+                 data=>console.log(data)
+             )
+             .catch(
+                 error=>console.log(error)
+             );
+         })
+          document.getElementById('btn_stringTest').addEventListener('click',function(){
+             fetch('stringTest',{
+                 method:'GET'
+             })
+             .then(response => response.text())
+             .then(
+                 data=>console.log(data)
+             )
+             .catch(
+                 error=>console.log(error)
+             );
+         })
+
+         document.getElementById('btn_deleteTest').addEventListener('click',function(){
+             fetch('delete',{
+                 method:'DELETE'
+             })
+             .then(response => response.text())
+             .then(
+                 data=>console.log(data)
+             )
+             .catch(
+                 error=>console.log(error)
+             );
+         })
+    })
+</script>
+</body>
+</html>
