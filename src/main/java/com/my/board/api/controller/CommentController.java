@@ -82,4 +82,12 @@ public class CommentController {
 
     }
 
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<?> deleteComment(
+            @PathVariable("commentId")Long commentId) {
+        commentService.deleteComment(commentId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ApiResponse.builder().message("댓글 삭제 성공").build());
+
+    }
 }

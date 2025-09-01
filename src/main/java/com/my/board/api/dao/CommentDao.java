@@ -34,4 +34,9 @@ public class CommentDao {
         em.persist(article);
 
     }
+
+    public void deleteComment(Long commentId) {
+        Comment comment = em.find(Comment.class,commentId);
+        em.remove(comment);
+    }
 }
