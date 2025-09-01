@@ -38,4 +38,9 @@ public class CommentService {
         dao.insertComment(articleId,CommentDto.fromDto(dto));
 
     }
+
+    public void deleteComment(Long commentId) {
+
+        dao.deleteComment(commentId);
+    }
 }
