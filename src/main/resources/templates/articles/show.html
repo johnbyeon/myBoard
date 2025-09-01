@@ -34,8 +34,9 @@
     <div class="card m-2">
       <div class="card-header">
         <span th:text="*{nickName}">Featured</span>
-        <a class="btn btn-sm btn-outline-primary" >수정</a>
-        <a class="btn btn-sm btn-outline-primary"id="comment-delete-btn">삭제</a>
+        <a class="btn btn-sm btn-outline-primary" id="comment-update-btn">수정</a>
+        <a class="btn btn-sm btn-outline-primary" id="comment-delete-btn">삭제</a>
+        <input type="hidden" th:value="*{id}">
       </div>
       <div class="card-body">
         <p class="card-text" th:text="*{body}">With supporting text below as a natural lead-in to additional content.</p>
@@ -61,6 +62,36 @@
 
   <script th:inline = "javascript">
     document.addEventListener('DOMContentLoaded',function(){
+      //댓글 삭제 버튼 이벤트
+      document.addEventListener('click',function(event){
+        if(event.target.id == 'comment-delete-btn'){
+            const commentId = event.target.nextElementSibling.value;
+            const sendUrl =`/api/comments/${commentId}`;
+            fetch(sendUrl,{
+              method:'DELETE',
+              headers : {
+                'content-Type' : 'application/json'
+              }
+            })
+            .then(response=>response.json())
+            .then(data=>{
+              alert(data.message);
+              location.href=`/articles/[[${dto.id}]]`;
+            })
+            .catch(error=>{
+              console.log('Error : ',error);
+            })
+        }
+      })
+      document.addEventListener('click',function(event){
+        if(event.target.id == 'comment-update-btn'){
+            const commentId = event.target.nextElementSibling.nextElementSibling.value;
+            const sendUrl =`/api/comments/${commentId}`;
+            location.href=`/articles/comments/view/${commentId}`
+          }
+      })
+
+
       const commentCreateButton = document.getElementById('comment-create-btn');
       if(commentCreateButton){
         commentCreateButton.addEventListener('click',function(event){
