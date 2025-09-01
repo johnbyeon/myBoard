@@ -25,8 +25,8 @@
     </tr>
     </tbody>
   </table>
-  <a href="" class="btn btn-primary" th:href="@{|/articles/${dto.id}/update|}">Edit</a>
-  <a href="" class="btn btn-danger" th:href="@{|/articles/${dto.id}/delete|}" >Delete</a>
+  <a class="btn btn-primary" th:href="@{|/articles/${dto.id}/update|}">Edit</a>
+  <a class="btn btn-danger" th:href="@{|/articles/${dto.id}/delete|}" >Delete</a>
   <a th:href="@{/articles}">Go to Article List</a>
   <br><br>
 
@@ -34,7 +34,7 @@
     <div class="card m-2">
       <div class="card-header">
         <span th:text="*{nickName}">Featured</span>
-        <a class="btn btn-sm btn-outline-primary">수정</a>
+        <a class="btn btn-sm btn-outline-primary" >수정</a>
         <a class="btn btn-sm btn-outline-primary"id="comment-delete-btn">삭제</a>
       </div>
       <div class="card-body">
@@ -57,6 +57,53 @@
     <!-- 전송버튼-->
     <button type="button" class="btn btn-primary" id="comment-create-btn">댓글 작성</button>
   </form>
+
+
+  <script th:inline = "javascript">
+    document.addEventListener('DOMContentLoaded',function(){
+      const commentCreateButton = document.getElementById('comment-create-btn');
+      if(commentCreateButton){
+        commentCreateButton.addEventListener('click',function(event){
+          event.preventDefault();
+          const nickNameInput = document.getElementById('new-comment-nickname');
+          const bodyInput = document.getElementById('new-comment-body');
+
+          if(nickNameInput.value == ""){
+            alert("닉네임을 입력하세요");
+            nickNameInput.focus();
+            return;
+          }
+          if(bodyInput.value == ""){
+            alert("내용을 입력하세요");
+            bodyInput.focus();
+            return;
+          }
+          const sendUrl = `/api/articles/[[${dto.id}]]/comments`;
+          //추가할 댓글을 json으로 만들기
+          const newComment = {
+              "nickName" : nickNameInput.value,
+              "body": bodyInput.value
+          }
+          //fetch 함수로 api호출하기
+          fetch(sendUrl,{
+            method:'POST',
+            headers : {
+              'content-Type' : 'application/json'
+            },
+            body: JSON.stringify(newComment)
+          })
+          .then(response=>response.json())
+          .then(data=>{
+            alert(data.message);
+            location.href=`/articles/[[${dto.id}]]`;
+          })
+          .catch(error=>{
+            console.log('Error : ',error);
+          })
+        })
+      }
+    })
+  </script>
 </div>
 </body>
 </html>
