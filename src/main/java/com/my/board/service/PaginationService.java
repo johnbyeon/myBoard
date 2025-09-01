@@ -20,7 +20,7 @@ public class PaginationService {
         if(startNumber > totalPageNumber-5 )
         {
             startNumber = totalPageNumber-5;
-            }
+        }
         return IntStream.range(startNumber,endNumber)
                 .boxed().toList();
     }

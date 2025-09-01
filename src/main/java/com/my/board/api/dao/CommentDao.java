@@ -18,6 +18,12 @@ public class CommentDao {
         return em.find(Comment.class,commentId);
     }
 
+
+    public void updateComment(Comment comment) {
+        Comment updateComment = em.find(Comment.class,comment.getId());
+        updateComment.setBody(comment.getBody());
+    }
+
     public void insertComment(Long articleId, Comment comment) {
         //1.해당 게시글을 찾는다.
         Article article = em.find(Article.class,articleId);
@@ -26,5 +32,6 @@ public class CommentDao {
         //3.comment를 게시글에 리스트로 추가한다.
         article.getCommentList().add(comment);
         em.persist(article);
+
     }
 }
