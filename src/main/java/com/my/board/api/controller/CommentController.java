@@ -1,5 +1,7 @@
 package com.my.board.api.controller;
 
+import com.my.board.api.exception.ApiResponse;
+import com.my.board.api.exception.BadRequestException;
 import com.my.board.api.service.CommentService;
 import com.my.board.dto.CommentDto;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +21,21 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
+    @GetMapping("exception")
+    public String exHander(){
+        throw new BadRequestException("Test");
+    }
 
     @GetMapping("/comments/{commentId}")
-    public ResponseEntity<CommentDto> commentSearch(@PathVariable Long commentId){
+    public ResponseEntity<?> commentSearch(@PathVariable Long commentId){
         Map<String,Object> result = commentService.findComment(commentId);
-        if(ObjectUtils.isEmpty(result))
+        CommentDto dto = (CommentDto) result.get("dto");
+        if(ObjectUtils.isEmpty(dto))
         {
-            return null;
+            String message = "댓글 조회 실패";
+            throw new BadRequestException(message);
         }
 
-        CommentDto dto = (CommentDto) result.get("dto");
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(dto);
